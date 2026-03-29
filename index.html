@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Youth Voice — Political Truth</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f5f0e8;
+    --accent: #c8392b;
+    --gold: #d4a843;
+    --muted: #6b6560;
+    --card: #ede8df;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 48px;
+    background: var(--paper);
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 900; letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 8px; }
+  .nav-links button {
+    background: none; border: 1.5px solid transparent;
+    padding: 8px 20px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 500; cursor: pointer;
+    letter-spacing: 0.04em; color: var(--ink);
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .nav-links button:hover,
+  .nav-links button.active {
+    border-color: var(--ink);
+    background: var(--ink); color: var(--paper);
+  }
+
+  /* ── LANG SWITCHER ── */
+  .lang-switcher {
+    display: flex; gap: 0; border: 1.5px solid var(--ink); margin-left: 16px;
+  }
+  .lang-btn {
+    background: none; border: none; padding: 7px 14px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.08em; cursor: pointer; color: var(--muted);
+    transition: all 0.2s; text-transform: uppercase;
+  }
+  .lang-btn:not(:last-child) { border-right: 1.5px solid var(--ink); }
+  .lang-btn.active { background: var(--ink); color: var(--paper); }
+
+  /* ── PAGES ── */
+  .page { display: none; min-height: 100vh; padding-top: 70px; }
+  .page.active { display: block; }
+
+  /* ══════════════════════════════
+     PAGE 1 — QUOTE
+  ══════════════════════════════ */
+  #page-home {
+    display: none;
+    position: relative; overflow: hidden;
+    background: var(--ink);
+  }
+  #page-home.active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+
+  .home-bg {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.04) 39px,
+      rgba(255,255,255,0.04) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.04) 39px,
+      rgba(255,255,255,0.04) 40px
+    );
+  }
+
+  .quote-wrapper {
+    position: relative; z-index: 2;
+    max-width: 900px; padding: 60px 48px;
+    text-align: center;
+    animation: fadeUp 1s ease both;
+  }
+
+  .quote-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 12rem; line-height: 0.6;
+    color: var(--accent); opacity: 0.4;
+    display: block; margin-bottom: 24px;
+    animation: fadeUp 1s 0.1s ease both;
+  }
+
+  .quote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 700; line-height: 1.2;
+    color: var(--paper);
+    animation: fadeUp 1s 0.2s ease both;
+  }
+
+  .quote-text em {
+    font-style: italic; color: var(--gold);
+  }
+
+  .quote-author {
+    margin-top: 36px;
+    font-size: 0.85rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted);
+    animation: fadeUp 1s 0.4s ease both;
+  }
+
+  .quote-author::before {
+    content: '— ';
+  }
+
+  .sub-quotes {
+    position: relative; z-index: 2;
+    display: flex; gap: 24px; padding: 0 48px 80px;
+    max-width: 1100px; width: 100%;
+    animation: fadeUp 1s 0.5s ease both;
+  }
+
+  .sub-card {
+    flex: 1; background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 28px; border-radius: 4px;
+    transition: border-color 0.3s;
+  }
+  .sub-card:hover { border-color: var(--accent); }
+
+  .sub-card p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-size: 1rem;
+    color: rgba(245,240,232,0.75); line-height: 1.6;
+  }
+  .sub-card cite {
+    display: block; margin-top: 16px;
+    font-size: 0.75rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--gold);
+    font-style: normal;
+  }
+
+  /* ══════════════════════════════
+     PAGE 2 — LINK CHECKER
+  ══════════════════════════════ */
+  #page-checker {
+    background: var(--paper);
+    padding-top: 70px;
+  }
+  #page-checker.active { display: block; }
+
+  .checker-hero {
+    padding: 72px 48px 40px;
+    border-bottom: 1.5px solid var(--ink);
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .checker-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 900; line-height: 1.05; max-width: 600px;
+  }
+  .checker-hero h1 span { color: var(--accent); font-style: italic; }
+  .checker-hero p {
+    max-width: 280px; font-size: 0.9rem;
+    color: var(--muted); line-height: 1.7;
+  }
+
+  .checker-body { padding: 48px; }
+
+  .input-row {
+    display: flex; gap: 12px; margin-bottom: 48px;
+    max-width: 800px;
+  }
+
+  .url-input {
+    flex: 1; padding: 18px 24px;
+    border: 2px solid var(--ink); background: transparent;
+    font-family: 'DM Sans', sans-serif; font-size: 1rem;
+    outline: none; transition: border-color 0.2s;
+    color: var(--ink);
+  }
+  .url-input::placeholder { color: var(--muted); }
+  .url-input:focus { border-color: var(--accent); }
+
+  .check-btn {
+    padding: 18px 36px;
+    background: var(--ink); color: var(--paper);
+    border: 2px solid var(--ink); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .check-btn:hover { background: var(--accent); border-color: var(--accent); }
+  .check-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .result-box {
+    max-width: 800px; border: 2px solid var(--ink);
+    display: none; animation: fadeUp 0.5s ease;
+  }
+  .result-box.show { display: block; }
+
+  .result-header {
+    padding: 24px 28px;
+    border-bottom: 1.5px solid var(--ink);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .result-url {
+    font-size: 0.8rem; color: var(--muted);
+    letter-spacing: 0.04em; word-break: break-all;
+  }
+
+  .score-badge {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .score-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem; font-weight: 900;
+  }
+  .score-label {
+    font-size: 0.75rem; letter-spacing: 0.1em;
+    text-transform: uppercase; font-weight: 500;
+  }
+
+  .score-red .score-number { color: #c8392b; }
+  .score-red .score-label { color: #c8392b; }
+  .score-yellow .score-number { color: #d4a843; }
+  .score-yellow .score-label { color: #d4a843; }
+  .score-green .score-number { color: #27ae60; }
+  .score-green .score-label { color: #27ae60; }
+
+  .result-body { padding: 28px; }
+
+  .verdict {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-style: italic;
+    line-height: 1.6; margin-bottom: 28px;
+    padding-bottom: 28px; border-bottom: 1px solid rgba(13,13,13,0.15);
+  }
+
+  .result-points { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .result-points li {
+    display: flex; gap: 14px; align-items: flex-start;
+    font-size: 0.9rem; line-height: 1.6;
+  }
+  .result-points li::before {
+    content: '→'; color: var(--accent); font-weight: 700;
+    flex-shrink: 0; margin-top: 1px;
+  }
+
+  .loading-bar {
+    display: none; max-width: 800px;
+    border: 2px solid var(--ink); padding: 32px;
+    align-items: center; gap: 20px;
+  }
+  .loading-bar.show { display: flex; }
+  .spinner {
+    width: 28px; height: 28px; border: 3px solid rgba(13,13,13,0.15);
+    border-top-color: var(--accent); border-radius: 50%;
+    animation: spin 0.8s linear infinite; flex-shrink: 0;
+  }
+  .loading-bar p { font-size: 0.9rem; color: var(--muted); }
+
+  /* ══════════════════════════════
+     PAGE 3 — VIDEOS
+  ══════════════════════════════ */
+  #page-videos { background: var(--paper); }
+  #page-videos.active { display: block; }
+
+  .videos-hero {
+    padding: 72px 48px 40px;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .videos-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 900; line-height: 1.05;
+  }
+  .videos-hero h1 span { color: var(--accent); font-style: italic; }
+  .videos-hero p {
+    margin-top: 16px; font-size: 0.9rem;
+    color: var(--muted); max-width: 500px; line-height: 1.7;
+  }
+
+  .videos-grid {
+    padding: 48px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .video-placeholder {
+    border: 2px dashed rgba(13,13,13,0.25);
+    aspect-ratio: 16/9;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 12px;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: default;
+  }
+  .video-placeholder:hover {
+    border-color: var(--accent);
+    background: rgba(200,57,43,0.03);
+  }
+  .play-icon {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(13,13,13,0.08);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .play-icon svg { width: 20px; height: 20px; fill: var(--muted); margin-left: 3px; }
+  .video-placeholder span {
+    font-size: 0.8rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  /* video upload panel */
+  .add-video-panel {
+    margin: 0 48px 32px;
+    border: 2px solid var(--ink);
+  }
+  .add-video-header {
+    padding: 16px 24px;
+    background: var(--ink); color: var(--paper);
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; user-select: none;
+  }
+  .add-video-header span {
+    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+  }
+  .add-video-header .toggle-icon { font-size: 1.2rem; transition: transform 0.2s; }
+  .add-video-header.open .toggle-icon { transform: rotate(45deg); }
+
+  .add-video-body {
+    display: none; padding: 28px;
+    border-top: 1.5px solid var(--ink);
+  }
+  .add-video-body.open { display: block; }
+
+  .tab-row { display: flex; gap: 0; margin-bottom: 24px; border: 1.5px solid var(--ink); width: fit-content; }
+  .tab-btn {
+    padding: 10px 24px; background: none; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.8rem; letter-spacing: 0.08em;
+    text-transform: uppercase; font-weight: 500; color: var(--muted); transition: all 0.2s;
+  }
+  .tab-btn.active { background: var(--ink); color: var(--paper); }
+  .tab-btn:not(:last-child) { border-right: 1.5px solid var(--ink); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .field-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+  .field-group { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 200px; }
+  .field-group label { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .field-group input {
+    padding: 12px 16px; border: 1.5px solid var(--ink); background: transparent;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none; color: var(--ink);
+    transition: border-color 0.2s;
+  }
+  .field-group input:focus { border-color: var(--accent); }
+
+  .upload-zone {
+    border: 2px dashed rgba(13,13,13,0.3); padding: 40px;
+    text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 16px;
+  }
+  .upload-zone:hover { border-color: var(--accent); background: rgba(200,57,43,0.03); }
+  .upload-zone input { display: none; }
+  .upload-zone p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+  .upload-zone strong { display: block; font-size: 1rem; color: var(--ink); margin-bottom: 8px; }
+
+  .add-btn {
+    padding: 12px 28px; background: var(--accent); color: var(--paper);
+    border: 2px solid var(--accent); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase; transition: all 0.2s; white-space: nowrap;
+  }
+  .add-btn:hover { background: var(--ink); border-color: var(--ink); }
+
+  /* video grid items */
+  .video-item { display: flex; flex-direction: column; }
+  .video-wrapper {
+    width: 100%;
+    height: 220px;
+    background: #000;
+    overflow: hidden;
+    display: block;
+    flex-shrink: 0;
+  }
+  .video-wrapper iframe,
+  .video-wrapper video {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    object-fit: cover;
+  }
+  .video-item-footer {
+    padding: 12px 0 4px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .video-title { font-size: 0.85rem; font-weight: 500; line-height: 1.4; }
+  .remove-btn {
+    background: none; border: none; cursor: pointer; color: var(--muted);
+    font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 4px 0; transition: color 0.2s; white-space: nowrap; margin-left: 12px; flex-shrink: 0;
+  }
+  .remove-btn:hover { color: var(--accent); }
+
+  .empty-state {
+    grid-column: 1/-1; text-align: center; padding: 60px 20px;
+    color: var(--muted); font-size: 0.9rem; line-height: 1.8;
+  }
+  .empty-state strong { display: block; font-size: 1.1rem; color: var(--ink); margin-bottom: 8px; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links button { padding: 7px 12px; font-size: 0.75rem; }
+    .checker-hero, .videos-hero { padding: 48px 20px 28px; flex-direction: column; gap: 20px; }
+    .checker-body, .videos-grid { padding: 24px 20px; }
+    .sub-quotes { flex-direction: column; padding: 0 20px 48px; }
+    .quote-wrapper { padding: 40px 24px; }
+    .input-row { flex-direction: column; }
+    .coming-soon-strip { margin: 0 20px 40px; }
+    .videos-hero { padding: 48px 20px 28px; }
+  }
+
+  /* ══════════════════════════════
+     PAGE 4 — POLL
+  ══════════════════════════════ */
+  #page-poll { background: var(--paper); }
+  #page-poll.active { display: block; }
+
+  .poll-hero {
+    padding: 72px 48px 40px;
+    border-bottom: 1.5px solid var(--ink);
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .poll-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 900; line-height: 1.05;
+  }
+  .poll-hero h1 span { color: var(--accent); font-style: italic; }
+  .poll-hero p { max-width: 280px; font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+  .poll-body { max-width: 780px; margin: 0 auto; padding: 52px 48px 80px; }
+
+  /* progress */
+  .poll-progress-wrap { margin-bottom: 40px; }
+  .poll-progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 10px;
+  }
+  .poll-progress-bar {
+    height: 3px; background: rgba(13,13,13,0.12); position: relative;
+  }
+  .poll-progress-fill {
+    height: 100%; background: var(--accent);
+    transition: width 0.4s ease; width: 0%;
+  }
+
+  /* question card */
+  .poll-question-wrap { animation: fadeUp 0.4s ease; }
+  .poll-q-number {
+    font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; margin-bottom: 16px;
+  }
+  .poll-q-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    font-weight: 700; line-height: 1.3; margin-bottom: 40px;
+  }
+
+  .poll-options { display: flex; flex-direction: column; gap: 14px; }
+  .poll-option {
+    border: 2px solid var(--ink); padding: 20px 24px;
+    cursor: pointer; transition: all 0.18s;
+    display: flex; align-items: center; gap: 16px;
+    font-size: 0.95rem; font-weight: 500; background: transparent;
+    font-family: 'DM Sans', sans-serif; text-align: left; color: var(--ink);
+  }
+  .poll-option:hover { background: var(--ink); color: var(--paper); }
+  .poll-option .opt-letter {
+    width: 32px; height: 32px; border: 1.5px solid currentColor;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; letter-spacing: 0.05em; flex-shrink: 0;
+    font-weight: 700;
+  }
+  .poll-option.selected { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+
+  /* result */
+  .poll-result { display: none; animation: fadeUp 0.5s ease; }
+  .poll-result.show { display: block; }
+
+  .result-party-header {
+    border: 2px solid var(--ink); margin-bottom: 28px;
+  }
+  .result-party-top {
+    background: var(--ink); color: var(--paper);
+    padding: 28px 32px;
+  }
+  .result-party-top p {
+    font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(245,240,232,0.5); margin-bottom: 10px;
+  }
+  .result-party-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900; line-height: 1.1;
+  }
+  .result-party-name em { color: var(--gold); font-style: italic; }
+
+  .result-party-body { padding: 28px 32px; }
+  .result-reasoning {
+    font-size: 0.95rem; line-height: 1.8; color: var(--ink);
+    margin-bottom: 28px;
+  }
+
+  .result-breakdown {
+    border-top: 1.5px solid rgba(13,13,13,0.15); padding-top: 24px;
+  }
+  .result-breakdown h3 {
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 16px;
+  }
+  .party-bars { display: flex; flex-direction: column; gap: 10px; }
+  .party-bar-row { display: flex; align-items: center; gap: 14px; }
+  .party-bar-name { font-size: 0.8rem; font-weight: 500; width: 130px; flex-shrink: 0; }
+  .party-bar-track { flex: 1; height: 8px; background: rgba(13,13,13,0.1); }
+  .party-bar-fill { height: 100%; background: var(--accent); transition: width 0.6s ease; }
+  .party-bar-fill.top { background: var(--ink); }
+  .party-bar-count { font-size: 0.75rem; color: var(--muted); width: 40px; text-align: right; }
+
+  .retake-btn {
+    margin-top: 32px; padding: 16px 36px;
+    border: 2px solid var(--ink); background: transparent;
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+    transition: all 0.2s; color: var(--ink);
+  }
+  .retake-btn:hover { background: var(--ink); color: var(--paper); }
+
+  /* ══════════════════════════════
+     PAGE: GOALS
+  ══════════════════════════════ */
+  #page-goals { background: var(--paper); }
+  #page-goals.active { display: block; }
+
+  .goals-hero {
+    padding: 72px 48px 48px;
+    border-bottom: 1.5px solid var(--ink);
+    background: var(--ink); color: var(--paper);
+  }
+  .goals-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 900; line-height: 1.05;
+  }
+  .goals-hero h1 em { color: var(--gold); font-style: italic; }
+  .goals-hero p {
+    margin-top: 16px; font-size: 0.95rem;
+    color: rgba(245,240,232,0.6); max-width: 520px; line-height: 1.8;
+  }
+
+  .goals-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-top: none;
+  }
+
+  .goal-card {
+    padding: 52px 40px;
+    border-right: 1.5px solid var(--ink);
+    border-bottom: 1.5px solid var(--ink);
+    position: relative; overflow: hidden;
+    transition: background 0.25s;
+  }
+  .goal-card:last-child { border-right: none; }
+  .goal-card:hover { background: var(--card); }
+
+  .goal-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem; font-weight: 900; line-height: 1;
+    color: rgba(13,13,13,0.07); position: absolute;
+    top: 16px; right: 24px; pointer-events: none;
+  }
+  .goal-icon {
+    font-size: 2rem; margin-bottom: 20px; display: block;
+  }
+  .goal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700; line-height: 1.2;
+    margin-bottom: 16px; color: var(--ink);
+  }
+  .goal-title em { color: var(--accent); font-style: italic; }
+  .goal-desc {
+    font-size: 0.88rem; line-height: 1.75; color: var(--muted);
+  }
+
+  .goals-stat-strip {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-top: 1.5px solid var(--ink);
+  }
+  .stat-block {
+    padding: 36px 40px; border-right: 1.5px solid var(--ink);
+    text-align: center;
+  }
+  .stat-block:last-child { border-right: none; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem; font-weight: 900; color: var(--accent);
+    display: block; line-height: 1;
+  }
+  .stat-label { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 8px; display: block; }
+
+  /* ══════════════════════════════
+     PAGE: COMPLAINTS / IDEAS
+  ══════════════════════════════ */
+  #page-voice { background: var(--paper); }
+  #page-voice.active { display: block; }
+
+  .voice-hero {
+    padding: 72px 48px 40px;
+    border-bottom: 1.5px solid var(--ink);
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .voice-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 900; line-height: 1.05;
+  }
+  .voice-hero h1 em { color: var(--accent); font-style: italic; }
+  .voice-hero p { max-width: 280px; font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+  .voice-body { display: grid; grid-template-columns: 1fr 1fr; min-height: 60vh; }
+
+  .voice-form-panel {
+    padding: 48px; border-right: 1.5px solid var(--ink);
+  }
+  .voice-type-toggle {
+    display: flex; gap: 0; border: 1.5px solid var(--ink); width: fit-content; margin-bottom: 32px;
+  }
+  .voice-type-btn {
+    padding: 10px 24px; background: none; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.8rem; letter-spacing: 0.08em;
+    text-transform: uppercase; font-weight: 500; color: var(--muted); transition: all 0.2s;
+  }
+  .voice-type-btn.active { background: var(--ink); color: var(--paper); }
+  .voice-type-btn:not(:last-child) { border-right: 1.5px solid var(--ink); }
+
+  .voice-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+  .voice-field label { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .voice-field input, .voice-field textarea, .voice-field select {
+    padding: 14px 18px; border: 1.5px solid var(--ink); background: transparent;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none;
+    color: var(--ink); transition: border-color 0.2s; resize: vertical;
+  }
+  .voice-field input:focus, .voice-field textarea:focus, .voice-field select:focus { border-color: var(--accent); }
+  .voice-field textarea { min-height: 140px; }
+  .voice-field select option { background: var(--paper); }
+
+  .voice-submit {
+    width: 100%; padding: 16px; background: var(--ink); color: var(--paper);
+    border: 2px solid var(--ink); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase; transition: all 0.2s; margin-top: 8px;
+  }
+  .voice-submit:hover { background: var(--accent); border-color: var(--accent); }
+
+  .voice-success {
+    display: none; padding: 20px; border: 2px solid #27ae60;
+    margin-top: 16px; font-size: 0.9rem; color: #27ae60; line-height: 1.6;
+    animation: fadeUp 0.4s ease;
+  }
+  .voice-success.show { display: block; }
+
+  .voice-feed-panel { padding: 48px; background: var(--card); }
+  .voice-feed-panel h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700; margin-bottom: 28px;
+  }
+  .feed-empty { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+
+  .feed-list { display: flex; flex-direction: column; gap: 16px; }
+  .feed-item {
+    background: var(--paper); border: 1.5px solid var(--ink);
+    padding: 20px; animation: fadeUp 0.4s ease;
+  }
+  .feed-item-type {
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 700; margin-bottom: 8px;
+  }
+  .feed-item-type.complaint { color: var(--accent); }
+  .feed-item-type.idea { color: #27ae60; }
+  .feed-item-topic { font-size: 0.75rem; color: var(--muted); margin-bottom: 10px; }
+  .feed-item-text { font-size: 0.88rem; line-height: 1.65; }
+  .feed-item-meta { font-size: 0.72rem; color: var(--muted); margin-top: 12px; }
+
+  @media (max-width: 768px) {
+    .goals-grid, .goals-stat-strip { grid-template-columns: 1fr; }
+    .goal-card { border-right: none; }
+    .stat-block { border-right: none; border-bottom: 1.5px solid var(--ink); }
+    .voice-hero { padding: 48px 20px 28px; flex-direction: column; gap: 16px; }
+    .voice-hero p { max-width: 100%; }
+    .voice-body { grid-template-columns: 1fr; }
+    .voice-form-panel { border-right: none; border-bottom: 1.5px solid var(--ink); padding: 28px 20px; }
+    .voice-feed-panel { padding: 28px 20px; }
+    .goals-hero { padding: 48px 20px 36px; }
+    .goal-card { padding: 36px 20px; }
+    .stat-block { padding: 28px 20px; }
+  }
+
+  @media (max-width: 768px) {
+    .poll-hero { padding: 48px 20px 28px; flex-direction: column; gap: 16px; }
+    .poll-hero p { max-width: 100%; }
+    .poll-body { padding: 36px 20px 60px; }
+    .result-party-top, .result-party-body { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Youth<span>Voice</span></div>
+  <div style="display:flex;align-items:center">
+    <div class="nav-links">
+      <button class="active" onclick="showPage('home', this)" data-en="Home" data-ru="Главная">Home</button>
+      <button onclick="showPage('goals', this)" data-en="Goals" data-ru="Цели">Goals</button>
+      <button onclick="showPage('voice', this)" data-en="Your Voice" data-ru="Ваш голос">Your Voice</button>
+      <button onclick="showPage('checker', this)" data-en="Fact Check" data-ru="Проверка">Fact Check</button>
+      <button onclick="showPage('poll', this)" data-en="Poll" data-ru="Опрос">Poll</button>
+      <button onclick="showPage('videos', this)" data-en="Watch" data-ru="Смотреть">Watch</button>
+    </div>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('en', this)">EN</button>
+      <button class="lang-btn" onclick="setLang('ru', this)">RU</button>
+      <button class="lang-btn" onclick="setLang('et', this)">ET</button>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE 1: QUOTE -->
+<div id="page-home" class="page active">
+  <div class="home-bg"></div>
+  <div class="quote-wrapper">
+    <span class="quote-mark">"</span>
+    <p class="quote-text">
+      The <em>youth</em> of today are the<br>leaders of tomorrow — but only if<br>they dare to <em>speak</em> today.
+    </p>
+    <p class="quote-author" data-en="Nelson Mandela" data-ru="Нельсон Мандела">Nelson Mandela</p>
+  </div>
+  <div class="sub-quotes">
+    <div class="sub-card">
+      <p data-en='"Young people need to be at the table where decisions are made — not waiting outside the door."' data-ru='"Молодые люди должны сидеть за столом, где принимаются решения — а не ждать за дверью."'>"Young people need to be at the table where decisions are made — not waiting outside the door."</p>
+      <cite>Malala Yousafzai</cite>
+    </div>
+    <div class="sub-card">
+      <p data-en='"Democracy is not a spectator sport. Your voice, your vote, your action — they all matter."' data-ru='"Демократия — это не зрелищный спорт. Твой голос, твой выбор, твои действия — всё это важно."'>"Democracy is not a spectator sport. Your voice, your vote, your action — they all matter."</p>
+      <cite>Barack Obama</cite>
+    </div>
+    <div class="sub-card">
+      <p data-en='"Never doubt that a small group of thoughtful, committed citizens can change the world."' data-ru='"Никогда не сомневайтесь, что небольшая группа думающих, преданных граждан способна изменить мир."'>"Never doubt that a small group of thoughtful, committed citizens can change the world."</p>
+      <cite>Margaret Mead</cite>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: GOALS -->
+<div id="page-goals" class="page">
+  <div class="goals-hero">
+    <h1>Our <em>Goals</em></h1>
+    <p>YouthVoice exists with a clear mission — to reshape the relationship between young people and politics in Estonia.</p>
+  </div>
+
+  <div class="goals-grid">
+    <div class="goal-card">
+      <span class="goal-number">01</span>
+      <span class="goal-icon">🗳️</span>
+      <div class="goal-title"><em>More</em> young voters</div>
+      <p class="goal-desc">Youth voter turnout in Estonia remains far below its potential. Our goal is to directly raise the number of young people who show up to vote — not just once, but as a habit. Every election is a chance to shape the country you live in.</p>
+    </div>
+    <div class="goal-card">
+      <span class="goal-number">02</span>
+      <span class="goal-icon">🧠</span>
+      <div class="goal-title"><em>Educated</em> and conscious votes</div>
+      <p class="goal-desc">Voting without understanding is noise. We want young voters to know what they're choosing — to read critically, verify sources, understand party positions, and make decisions based on facts rather than headlines or social media trends.</p>
+    </div>
+    <div class="goal-card">
+      <span class="goal-number">03</span>
+      <span class="goal-icon">✊</span>
+      <div class="goal-title">Youth <em>can</em> change their future</div>
+      <p class="goal-desc">Politics isn't something that happens to you — it's something you participate in. Housing costs, job markets, climate policy, education funding — these are decided by governments that you elect. Your generation has the numbers to change the outcome.</p>
+    </div>
+  </div>
+
+  <div class="goals-stat-strip">
+    <div class="stat-block">
+      <span class="stat-number">38%</span>
+      <span class="stat-label">Youth voter turnout in last Estonian elections</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-number">3×</span>
+      <span class="stat-label">More likely to vote if politically educated early</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-number">2027</span>
+      <span class="stat-label">Next Estonian parliamentary elections</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: YOUR VOICE -->
+<div id="page-voice" class="page">
+  <div class="voice-hero">
+    <h1>Your <em>Voice</em></h1>
+    <p>Share your complaints about the current government or your ideas for a better Estonia. Every submission is read.</p>
+  </div>
+  <div class="voice-body">
+    <!-- FORM -->
+    <div class="voice-form-panel">
+      <div class="voice-type-toggle">
+        <button class="voice-type-btn active" onclick="setVoiceType('complaint', this)" id="btn-complaint">⚡ Complaint</button>
+        <button class="voice-type-btn" onclick="setVoiceType('idea', this)" id="btn-idea">💡 Idea</button>
+      </div>
+
+      <div class="voice-field">
+        <label id="label-topic">Topic / Area</label>
+        <select id="voiceTopic">
+          <option value="">— Select a topic —</option>
+          <option value="Housing">Housing & rent</option>
+          <option value="Education">Education</option>
+          <option value="Healthcare">Healthcare</option>
+          <option value="Environment">Environment & climate</option>
+          <option value="Economy">Economy & taxes</option>
+          <option value="Defense">Defense & security</option>
+          <option value="Transport">Transport & infrastructure</option>
+          <option value="Youth policy">Youth policy</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="voice-field">
+        <label id="label-name">Your name (optional)</label>
+        <input type="text" id="voiceName" placeholder="Anonymous" />
+      </div>
+
+      <div class="voice-field">
+        <label id="label-message">Your message</label>
+        <textarea id="voiceMessage" placeholder="Write your complaint or idea here..."></textarea>
+      </div>
+
+      <button class="voice-submit" onclick="submitVoice()">Submit →</button>
+
+      <div class="voice-success" id="voiceSuccess">
+        ✓ Thank you — your message has been added to the feed.
+      </div>
+    </div>
+
+    <!-- FEED -->
+    <div class="voice-feed-panel">
+      <h2>Community Feed</h2>
+      <div id="voiceFeed">
+        <p class="feed-empty">No submissions yet. Be the first to share your voice.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: FACT CHECKER -->
+<div id="page-checker" class="page">
+  <div class="checker-hero">
+    <h1>Is this source<br><span data-en="trustworthy?" data-ru="надёжный?">trustworthy?</span></h1>
+    <p data-en="Paste any link and our AI will analyse the source for credibility, bias, and reliability in seconds." data-ru="Вставьте любую ссылку, и наш ИИ за секунды проанализирует источник на достоверность, предвзятость и надёжность.">Paste any link and our AI will analyse the source for credibility, bias, and reliability in seconds.</p>
+  </div>
+  <div class="checker-body">
+    <div class="input-row">
+      <input class="url-input" id="urlInput" type="url" data-en-placeholder="Paste a website link here — e.g. https://bbc.com/article..." data-ru-placeholder="Вставьте ссылку сюда — например https://bbc.com/article..." placeholder="Paste a website link here — e.g. https://bbc.com/article..." />
+      <button class="check-btn" id="checkBtn" onclick="checkSource()" data-en="Check Source" data-ru="Проверить">Check Source</button>
+    </div>
+
+    <div class="loading-bar" id="loadingBar">
+      <div class="spinner"></div>
+      <p data-en="Analysing source — checking credibility, bias signals, and publication history…" data-ru="Анализируем источник — проверяем достоверность, признаки предвзятости и историю публикаций…">Analysing source — checking credibility, bias signals, and publication history…</p>
+    </div>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-header">
+        <span class="result-url" id="resultUrl"></span>
+        <div class="score-badge" id="scoreBadge">
+          <div>
+            <div class="score-number" id="scoreNumber"></div>
+            <div class="score-label" id="scoreLabel"></div>
+          </div>
+        </div>
+      </div>
+      <div class="result-body">
+        <p class="verdict" id="verdictText"></p>
+        <ul class="result-points" id="resultPoints"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 4: POLL -->
+<div id="page-poll" class="page">
+  <div class="poll-hero">
+    <h1 data-en="Which party matches you?" data-ru="Какая партия вам ближе?">Which party<br><span data-en="matches you?" data-ru="ближе вам?">matches you?</span></h1>
+    <p data-en="Answer 8 questions on Estonian political issues and find out which party best reflects your views." data-ru="Ответьте на 8 вопросов об эстонской политике и узнайте, какая партия лучше всего отражает ваши взгляды.">Answer 8 questions on Estonian political issues and find out which party best reflects your views.</p>
+  </div>
+  <div class="poll-body">
+
+    <!-- Progress -->
+    <div class="poll-progress-wrap">
+      <div class="poll-progress-label">
+        <span id="pollProgressText">Question 1 of 8</span>
+        <span id="pollProgressPct">0%</span>
+      </div>
+      <div class="poll-progress-bar"><div class="poll-progress-fill" id="pollProgressFill"></div></div>
+    </div>
+
+    <!-- Question -->
+    <div class="poll-question-wrap" id="pollQuestionWrap">
+      <div class="poll-q-number" id="pollQNumber">Question 1</div>
+      <div class="poll-q-text" id="pollQText"></div>
+      <div class="poll-options" id="pollOptions"></div>
+    </div>
+
+    <!-- Result -->
+    <div class="poll-result" id="pollResult">
+      <div class="result-party-header">
+        <div class="result-party-top">
+          <p>Your closest match</p>
+          <div class="result-party-name" id="resultPartyName"></div>
+        </div>
+        <div class="result-party-body">
+          <div class="result-reasoning" id="resultReasoning"></div>
+          <div class="result-breakdown">
+            <h3>Your alignment breakdown</h3>
+            <div class="party-bars" id="partyBars"></div>
+          </div>
+        </div>
+      </div>
+      <button class="retake-btn" onclick="restartPoll()">↺ Retake the Quiz</button>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="page-videos" class="page">
+  <div class="videos-hero">
+    <h1>Watch &<br><span style="color:var(--accent);font-style:italic">Learn</span></h1>
+    <p>Videos on youth politics, civic education, and how to make your voice count.</p>
+  </div>
+
+  <div class="videos-grid" id="videosGrid">
+    <!-- VIDEO 1 -->
+    <div class="video-item">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" allowfullscreen frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
+      <div class="video-item-footer">
+        <span class="video-title">Video 1</span>
+      </div>
+    </div>
+    <!-- VIDEO 2 -->
+    <div class="video-item">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" allowfullscreen frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
+      <div class="video-item-footer">
+        <span class="video-title">Video 2</span>
+      </div>
+    </div>
+    <!-- VIDEO 3 -->
+    <div class="video-item">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" allowfullscreen frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
+      <div class="video-item-footer">
+        <span class="video-title">Video 3</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- VIDEO GRID -->
+  <div class="videos-grid" id="videosGrid">
+    <div class="empty-state">
+      <strong>No videos yet</strong>
+      Use the panel above to add YouTube videos or upload your own files.
+    </div>
+  </div>
+</div>
+
+<script>
+  function showPage(id, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  /* ── LANGUAGE ── */
+  let currentLang = 'en';
+
+  const translations = {
+    en: {
+      quoteMain: 'The <em>youth</em> of today are the<br>leaders of tomorrow — but only if<br>they dare to <em>speak</em> today.',
+      checkerH1: 'Is this source<br><span data-en="trustworthy?" data-ru="надёжный?">trustworthy?</span>',
+      pollResultLabel: 'Your closest match',
+      pollBreakdownTitle: 'Your alignment breakdown',
+      pollNeutralMsg: 'Your answers were mostly neutral — try again with stronger opinions!',
+      retakeBtn: '↺ Retake the Quiz',
+      addVideoBtn: '+ Add a Video',
+      tabYT: 'YouTube Link', tabURL: 'Any Video URL', tabUpload: 'Upload File',
+      ytLabel: 'YouTube URL', titleLabel: 'Title (optional)',
+      ytPlaceholder: 'https://www.youtube.com/watch?v=...',
+      addBtn: 'Add Video',
+      directLabel: 'Direct Video URL (.mp4, .webm…)',
+      directPlaceholder: 'https://example.com/video.mp4',
+      uploadStrong: 'Click to choose a video file',
+      uploadP: 'or drag and drop here<br>Supports MP4, WebM, MOV · Plays directly in browser',
+      uploadTitleLabel: 'Title (optional)',
+      noVideos: '<strong>No videos yet</strong>Use the panel above to add YouTube videos or upload your own files.',
+      complete: 'Complete!',
+      pollAgree: 'Agree', pollNeutral: 'Neutral / Not sure', pollDisagree: 'Disagree',
+      questionOf: (c, t) => `Question ${c} of ${t}`,
+      questionN: (n) => `Question ${n}`,
+      removeBtn: 'Remove',
+    },
+    ru: {
+      quoteMain: '<em>Молодёжь</em> сегодня — это<br>лидеры завтра, но только если<br>они осмелятся <em>говорить</em> сегодня.',
+      checkerH1: 'Этот источник<br><span>надёжный?</span>',
+      pollResultLabel: 'Ваше ближайшее совпадение',
+      pollBreakdownTitle: 'Ваше распределение по партиям',
+      pollNeutralMsg: 'Большинство ваших ответов нейтральны — попробуйте ещё раз с более чёткой позицией!',
+      retakeBtn: '↺ Пройти заново',
+      addVideoBtn: '+ Добавить видео',
+      tabYT: 'Ссылка YouTube', tabURL: 'Любая ссылка на видео', tabUpload: 'Загрузить файл',
+      ytLabel: 'Ссылка YouTube', titleLabel: 'Название (необязательно)',
+      ytPlaceholder: 'https://www.youtube.com/watch?v=...',
+      addBtn: 'Добавить',
+      directLabel: 'Прямая ссылка на видео (.mp4, .webm…)',
+      directPlaceholder: 'https://example.com/video.mp4',
+      uploadStrong: 'Нажмите, чтобы выбрать файл',
+      uploadP: 'или перетащите сюда<br>Поддерживается MP4, WebM, MOV',
+      uploadTitleLabel: 'Название (необязательно)',
+      noVideos: '<strong>Видео пока нет</strong>Используйте панель выше, чтобы добавить видео.',
+      complete: 'Готово!',
+      pollAgree: 'Согласен', pollNeutral: 'Нейтрально / Не уверен', pollDisagree: 'Не согласен',
+      questionOf: (c, t) => `Вопрос ${c} из ${t}`,
+      questionN: (n) => `Вопрос ${n}`,
+      removeBtn: 'Удалить',
+    },
+    et: {
+      quoteMain: '<em>Noored</em> täna on<br>homse juhid — aga ainult siis,<br>kui nad julgevad täna <em>rääkida</em>.',
+      checkerH1: 'Kas see allikas<br><span>on usaldusväärne?</span>',
+      pollResultLabel: 'Sinu lähim vaste',
+      pollBreakdownTitle: 'Sinu parteijoondus',
+      pollNeutralMsg: 'Enamik sinu vastuseid olid neutraalsed — proovi uuesti selgema seisukohaga!',
+      retakeBtn: '↺ Tee uuesti',
+      addVideoBtn: '+ Lisa video',
+      tabYT: 'YouTube\'i link', tabURL: 'Video URL', tabUpload: 'Lae fail üles',
+      ytLabel: 'YouTube\'i URL', titleLabel: 'Pealkiri (valikuline)',
+      ytPlaceholder: 'https://www.youtube.com/watch?v=...',
+      addBtn: 'Lisa video',
+      directLabel: 'Otsene video URL (.mp4, .webm…)',
+      directPlaceholder: 'https://example.com/video.mp4',
+      uploadStrong: 'Klõpsa videofaili valimiseks',
+      uploadP: 'või lohista siia<br>Toetab MP4, WebM, MOV',
+      uploadTitleLabel: 'Pealkiri (valikuline)',
+      noVideos: '<strong>Videoid pole veel</strong>Kasuta ülalolevat paneeli YouTube\'i videote lisamiseks.',
+      complete: 'Valmis!',
+      pollAgree: 'Nõustun', pollNeutral: 'Neutraalne / Ei tea', pollDisagree: 'Ei nõustu',
+      questionOf: (c, t) => `Küsimus ${c} / ${t}`,
+      questionN: (n) => `Küsimus ${n}`,
+      removeBtn: 'Eemalda',
+    }
+  };
+
+  const questionsEt = [
+    { text: "Kas Eesti peaks suurendama kaitsekulutusi 5%-ni SKP-st, isegi kui see tähendab sotsiaaltoetuste kärpimist?", agree: ["Reformierakond","Isamaa"], disagree: ["Keskerakond"] },
+    { text: "Mootorsõidukimaks tuleks täielikult kaotada, sõltumata selle mõjust riigieelarve tasakaalule.", agree: ["EKRE","Isamaa"], disagree: ["Reformierakond","SDE","Eesti 200"] },
+    { text: "Ühtne 700€ maksuvaba tulu kõigile on parem kui süsteem, kus maksuvaba summa sõltub sissetulekust.", agree: ["Reformierakond","Parempoolsed"], disagree: ["SDE","Keskerakond"] },
+    { text: "Üleminek eestikeelsele õppele kõikides koolides peaks toimuma nii kiiresti kui võimalik, ilma eranditeta.", agree: ["Reformierakond","Isamaa","Eesti 200"], disagree: ["Keskerakond"] },
+    { text: "Eesti peaks seadma kliimaneutraalsuse eesmärgid põlevkivitööstuse kasumlikkusest tähtsamaks.", agree: ["SDE","Eestimaa Rohelised"], disagree: ["EKRE","Isamaa"] },
+    { text: "Samasooliste abielu seadustamine 2024. aastal oli positiivne samm Eesti ühiskonnale.", agree: ["Reformierakond","SDE","Eesti 200"], disagree: ["EKRE","Isamaa"] },
+    { text: "Eesti peaks lihtsustama välismaiste töötajate riiki sisenemist, et lahendada tööjõupuudust.", agree: ["Eesti 200","Parempoolsed"], disagree: ["EKRE"] },
+    { text: "Käibemaksu tõstmine 24%-le on vajalik ohver Eesti iseseisvuse kaitsmiseks.", agree: ["Reformierakond","SDE","Eesti 200"], disagree: ["Isamaa","EKRE","Keskerakond"] }
+  ];
+
+  const partyDescriptionsEt = {
+    "Reformierakond": "Reformierakond on liberaal-konservatiivne erakond, mis keskendub vabaturumajandusele, tugevale riigkaitsele ja Euroopa integratsiooni toetamisele. Toetab käibemaksu tõusu, kaitsekulutuste suurendamist ja eestikeelsele õppele üleminekut.",
+    "Isamaa": "Isamaa on rahvuskonservatiivne erakond, mis rõhutab eesti kultuuriidentiteeti, tugevat kaitset ja traditsioonilisi väärtusi. Vastandub samasooliste abielule ja käibemaksu tõusule.",
+    "EKRE": "EKRE on paremrahvuslik erakond, mis toetab ranget immigratsioonipoliitikat, traditsioonilisi väärtusi ja suhtub skeptiliselt EL-i poliitikasse. Soovib kaotada mootorsõidukimaksu.",
+    "Keskerakond": "Keskerakond on traditsiooniliselt orienteeritud sotsiaalhoolekannet ja venekeelse vähemuse õigusi. Pooldab aeglasemat üleminekut eestikeelsele haridusele.",
+    "SDE": "Sotsiaaldemokraadid ühendavad progressiivseid sotsiaalpoliitilisi seisukohti Euroopa-meelse kursiga. Toetavad samasooliste abielu, kliimaeesmärke ja progressiivset maksustamist.",
+    "Eesti 200": "Eesti 200 on tsentristlik liberaalne erakond, mis keskendub haridusreformile, digiarengule ja avatud immigratsioonile. Toetab koalitsiooni maksupoliitikat.",
+    "Parempoolsed": "Parempoolsed on ettevõtluskeskselt konservatiivne erakond, mis toetab ühtset tulumaksu, avatud tööturgu ja majanduslikku liberalismi.",
+    "Eestimaa Rohelised": "Eestimaa Rohelised seavad keskkonna- ja kliimapoliitika põlevkivitööstusest tähtsamaks, toetades jätkusuutlikku arengut."
+  };
+
+  const questionsRu = [
+    { text: "Должна ли Эстония увеличить расходы на оборону до 5% ВВП, даже если это означает сокращение социальных льгот?", agree: ["Reformierakond","Isamaa"], disagree: ["Keskerakond"] },
+    { text: "Автомобильный налог следует полностью отменить, независимо от его влияния на государственный бюджет.", agree: ["EKRE","Isamaa"], disagree: ["Reformierakond","SDE","Eesti 200"] },
+    { text: "Единый необлагаемый минимум в 700€ для всех лучше, чем система, где необлагаемая сумма зависит от дохода.", agree: ["Reformierakond","Parempoolsed"], disagree: ["SDE","Keskerakond"] },
+    { text: "Переход на обучение на эстонском языке во всех школах должен произойти как можно быстрее, без исключений.", agree: ["Reformierakond","Isamaa","Eesti 200"], disagree: ["Keskerakond"] },
+    { text: "Эстония должна ставить достижение климатической нейтральности выше прибыльности сланцевой промышленности (põlevkivi).", agree: ["SDE","Eestimaa Rohelised"], disagree: ["EKRE","Isamaa"] },
+    { text: "Легализация однополых браков в 2024 году стала позитивным шагом для эстонского общества.", agree: ["Reformierakond","SDE","Eesti 200"], disagree: ["EKRE","Isamaa"] },
+    { text: "Эстония должна упростить въезд иностранных работников для решения проблемы нехватки рабочей силы.", agree: ["Eesti 200","Parempoolsed"], disagree: ["EKRE"] },
+    { text: "Повышение НДС (Käibemaks) до 24% — необходимая жертва для защиты независимости Эстонии.", agree: ["Reformierakond","SDE","Eesti 200"], disagree: ["Isamaa","EKRE","Keskerakond"] }
+  ];
+
+  const partyDescriptionsRu = {
+    "Reformierakond": "Реформистская партия — либерально-консервативная партия, ориентированная на свободный рынок, сильную оборону и евроинтеграцию. Поддерживает повышение НДС, рост оборонных расходов и переход на эстонский язык обучения.",
+    "Isamaa": "Isamaa — национально-консервативная партия, акцентирующая эстонскую культурную идентичность, сильную оборону и традиционные ценности. Выступает против однополых браков и повышения НДС.",
+    "EKRE": "EKRE — правопопулистская партия, выступающая за строгий контроль над иммиграцией, традиционные ценности и скептически относящаяся к политике ЕС. Хочет отменить автомобильный налог.",
+    "Keskerakond": "Центристская партия традиционно ориентирована на социальное обеспечение и права русскоязычного меньшинства. Выступает за более медленный переход на эстонский язык в школах.",
+    "SDE": "Социал-демократы совмещают прогрессивную социальную политику с проевропейской позицией. Поддерживают однополые браки, климатические цели и прогрессивное налогообложение.",
+    "Eesti 200": "Eesti 200 — центристская либеральная партия, ориентированная на реформу образования, цифровые инновации и открытость к иммиграции. Поддерживает налоговую политику коалиции.",
+    "Parempoolsed": "Parempoolsed — бизнес-ориентированная консервативная партия, поддерживающая плоское налогообложение, открытые рынки труда и экономический либерализм.",
+    "Eestimaa Rohelised": "Эстонские Зелёные ставят в приоритет экологическую политику, климатическую нейтральность и устойчивое развитие над добычей сланца."
+  };
+
+  function setLang(lang, btn) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const t = translations[lang];
+
+    // Nav
+    const navLabels = {
+      en: ['Home','Goals','Your Voice','Fact Check','Poll','Watch'],
+      ru: ['Главная','Цели','Ваш голос','Проверка','Опрос','Смотреть'],
+      et: ['Avaleht','Eesmärgid','Sinu hääl','Kontrolli','Küsitlus','Vaata']
+    };
+    document.querySelectorAll('.nav-links button').forEach((b, i) => {
+      if (navLabels[lang][i]) b.textContent = navLabels[lang][i];
+    });
+
+    // HOME page quote
+    const quoteEl = document.querySelector('.quote-text');
+    if (quoteEl) quoteEl.innerHTML = t.quoteMain;
+
+    // HOME sub-quote authors (static, no change needed)
+    const subQuotes = {
+      en: [
+        '"Young people need to be at the table where decisions are made — not waiting outside the door."',
+        '"Democracy is not a spectator sport. Your voice, your vote, your action — they all matter."',
+        '"Never doubt that a small group of thoughtful, committed citizens can change the world."'
+      ],
+      ru: [
+        '"Молодые люди должны сидеть за столом, где принимаются решения — а не ждать за дверью."',
+        '"Демократия — это не зрелищный спорт. Твой голос, твой выбор, твои действия — всё это важно."',
+        '"Никогда не сомневайтесь, что небольшая группа думающих, преданных граждан способна изменить мир."'
+      ],
+      et: [
+        '"Noored peavad olema laua taga, kus otsuseid tehakse — mitte ukse taga ootamas."',
+        '"Demokraatia ei ole pealtvaatajate sport. Sinu hääl, sinu hääletamine, sinu tegevus — kõik see loeb."',
+        '"Ärge kunagi kahelge, et väike rühm mõtlevaid, pühendunud kodanikke suudab maailma muuta."'
+      ]
+    };
+    document.querySelectorAll('.sub-card p').forEach((el, i) => {
+      if (subQuotes[lang] && subQuotes[lang][i]) el.textContent = subQuotes[lang][i];
+    });
+
+    // GOALS page
+    const goalsTitles = {
+      en: ['<em>More</em> young voters', '<em>Educated</em> and conscious votes', 'Youth <em>can</em> change their future'],
+      ru: ['<em>Больше</em> молодых избирателей', '<em>Образованные</em> и осознанные голоса', 'Молодёжь <em>может</em> изменить своё будущее'],
+      et: ['<em>Rohkem</em> noori valijaid', '<em>Haritud</em> ja teadlikud hääled', 'Noored <em>saavad</em> oma tulevikku muuta']
+    };
+    const goalsDescs = {
+      en: [
+        'Youth voter turnout in Estonia remains far below its potential. Our goal is to directly raise the number of young people who show up to vote — not just once, but as a habit. Every election is a chance to shape the country you live in.',
+        'Voting without understanding is noise. We want young voters to know what they\'re choosing — to read critically, verify sources, understand party positions, and make decisions based on facts rather than headlines or social media trends.',
+        'Politics isn\'t something that happens to you — it\'s something you participate in. Housing costs, job markets, climate policy, education funding — these are decided by governments that you elect. Your generation has the numbers to change the outcome.'
+      ],
+      ru: [
+        'Явка молодёжи на выборах в Эстонии остаётся значительно ниже потенциала. Наша цель — напрямую увеличить число молодых людей, которые приходят голосовать — не один раз, а как привычку.',
+        'Голосование без понимания — это шум. Мы хотим, чтобы молодые избиратели знали, что они выбирают — читали критически, проверяли источники и принимали решения на основе фактов.',
+        'Политика — это не то, что с вами происходит, а то, в чём вы участвуете. Стоимость жилья, рынок труда, климатическая политика — всё это решают правительства, которые вы выбираете.'
+      ],
+      et: [
+        'Noorte valimisaktiivsus Eestis on kaugelt alla potentsiaali. Meie eesmärk on otseselt suurendada noorte arvu, kes tulevad valima — mitte ainult korra, vaid harjumusena.',
+        'Hääletamine ilma arusaamata on müra. Tahame, et noored valijad teaksid, mida nad valivad — loeksid kriitiliselt, kontrolliksid allikaid ja teeksid otsuseid faktide põhjal.',
+        'Poliitika ei ole midagi, mis sinuga juhtub — see on midagi, milles sa osaled. Eluasemekulud, tööturud, kliimapolitiika — kõik seda otsustavad valitsused, kelle sina valid.'
+      ]
+    };
+    document.querySelectorAll('.goal-title').forEach((el, i) => {
+      if (goalsTitles[lang] && goalsTitles[lang][i]) el.innerHTML = goalsTitles[lang][i];
+    });
+    document.querySelectorAll('.goal-desc').forEach((el, i) => {
+      if (goalsDescs[lang] && goalsDescs[lang][i]) el.textContent = goalsDescs[lang][i];
+    });
+    const goalsHeroP = document.querySelector('.goals-hero p');
+    const goalsHeroTexts = {
+      en: 'YouthVoice exists with a clear mission — to reshape the relationship between young people and politics in Estonia.',
+      ru: 'YouthVoice существует с чёткой миссией — изменить отношения между молодёжью и политикой в Эстонии.',
+      et: 'YouthVoice eksisteerib selge missiooniga — kujundada ümber noorte ja poliitika suhe Eestis.'
+    };
+    if (goalsHeroP) goalsHeroP.textContent = goalsHeroTexts[lang];
+
+    // CHECKER page
+    const checkerH1s = { en: 'Is this source<br><span style="color:var(--accent);font-style:italic">trustworthy?</span>', ru: 'Этот источник<br><span style="color:var(--accent);font-style:italic">надёжный?</span>', et: 'Kas see allikas<br><span style="color:var(--accent);font-style:italic">on usaldusväärne?</span>' };
+    const checkerH1el = document.querySelector('#page-checker h1');
+    if (checkerH1el) checkerH1el.innerHTML = checkerH1s[lang];
+    const checkerDescs = { en: 'Paste any link and our AI will analyse the source for credibility, bias, and reliability in seconds.', ru: 'Вставьте любую ссылку, и наш ИИ за секунды проанализирует источник на достоверность, предвзятость и надёжность.', et: 'Kleebi suvaline link ja meie tehisintellekt analüüsib allika usaldusväärsust sekunditega.' };
+    const checkerP = document.querySelector('#page-checker .checker-hero p');
+    if (checkerP) checkerP.textContent = checkerDescs[lang];
+    const placeholders = { en: 'Paste a website link here — e.g. https://bbc.com/article...', ru: 'Вставьте ссылку сюда — например https://bbc.com/article...', et: 'Kleebi veebisaidi link siia — nt https://bbc.com/article...' };
+    const urlInput = document.getElementById('urlInput');
+    if (urlInput) urlInput.placeholder = placeholders[lang];
+    const checkLabels = { en: 'Check Source', ru: 'Проверить', et: 'Kontrolli' };
+    const checkBtn = document.getElementById('checkBtn');
+    if (checkBtn) checkBtn.textContent = checkLabels[lang];
+
+    // VOICE page
+    updateVoiceLabels(lang);
+
+    // WATCH page video panel
+    const addVideoHeader = document.querySelector('.add-video-header span');
+    if (addVideoHeader) addVideoHeader.textContent = t.addVideoBtn;
+    const tabBtns = document.querySelectorAll('#addVideoBody .tab-btn');
+    if (tabBtns[0]) tabBtns[0].textContent = t.tabYT;
+    if (tabBtns[1]) tabBtns[1].textContent = t.tabURL;
+    if (tabBtns[2]) tabBtns[2].textContent = t.tabUpload;
+
+    // POLL
+    const retake = document.querySelector('.retake-btn');
+    if (retake) retake.textContent = t.retakeBtn;
+    const resLabel = document.querySelector('.result-party-top p');
+    if (resLabel) resLabel.textContent = t.pollResultLabel;
+    const bdTitle = document.querySelector('.result-breakdown h3');
+    if (bdTitle) bdTitle.textContent = t.pollBreakdownTitle;
+    if (currentQ < questions.length) renderQuestion();
+  }
+
+  async function checkSource() {
+    const url = document.getElementById('urlInput').value.trim();
+    const alerts = { en: 'Please paste a URL first.', ru: 'Пожалуйста, вставьте ссылку.', et: 'Palun kleebi link.' };
+    if (!url) { alert(alerts[currentLang]); return; }
+
+    const btn = document.getElementById('checkBtn');
+    const loading = document.getElementById('loadingBar');
+    const resultBox = document.getElementById('resultBox');
+
+    btn.disabled = true;
+    resultBox.classList.remove('show');
+    loading.classList.add('show');
+
+    const langInstruction = currentLang === 'ru' ? 'Respond in Russian.' : currentLang === 'et' ? 'Respond in Estonian.' : 'Respond in English.';
+
+    try {
+      const response = await fetch('https://youthvoice-checker.mfxxmail-e97.workers.dev/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 500,
+          system: `You are a media literacy expert. Evaluate website trustworthiness. ${langInstruction} Respond ONLY with valid JSON, no markdown, no extra text: {"score":75,"verdict":"Two sentences.","points":["Point 1.","Point 2.","Point 3."]} Score: 0-40 untrustworthy, 41-70 caution, 71-100 reliable.`,
+          messages: [{ role: 'user', content: `Evaluate trustworthiness of: ${url}` }]
+        })
+      });
+
+      if (!response.ok) throw new Error('Status ' + response.status);
+
+      const data = await response.json();
+      if (data.error) throw new Error(data.error.message);
+
+      const text = data.content.map(i => i.text || '').join('');
+      const clean = text.replace(/```json|```/g, '').trim();
+
+      let result;
+      try { result = JSON.parse(clean); }
+      catch (e) {
+        const match = clean.match(/\{[\s\S]*\}/);
+        if (match) result = JSON.parse(match[0]);
+        else throw new Error('Parse failed');
+      }
+
+      loading.classList.remove('show');
+      renderResult(url, result);
+
+    } catch (err) {
+      loading.classList.remove('show');
+      console.error('Fact check error:', err);
+      const errMsgs = {
+        en: 'Could not reach the fact-check service. Please try again.',
+        ru: 'Не удалось связаться с сервисом. Попробуйте позже.',
+        et: 'Teenusega ühendamine ebaõnnestus. Proovi uuesti.'
+      };
+      alert(errMsgs[currentLang]);
+    }
+
+    btn.disabled = false;
+  }
+
+  function renderResult(url, result) {
+    document.getElementById('resultUrl').textContent = url;
+    document.getElementById('scoreNumber').textContent = result.score + '/100';
+
+    const badge = document.getElementById('scoreBadge');
+    badge.className = 'score-badge';
+    const labels = {
+      en: { bad: 'Untrustworthy', mid: 'Use Caution', good: 'Reliable' },
+      ru: { bad: 'Ненадёжно', mid: 'Осторожно', good: 'Надёжно' },
+      et: { bad: 'Ebausaldusvääärne', mid: 'Ole ettevaatlik', good: 'Usaldusväärne' }
+    };
+    const l = labels[currentLang] || labels.en;
+    let label = '';
+    if (result.score <= 40) { badge.classList.add('score-red'); label = l.bad; }
+    else if (result.score <= 70) { badge.classList.add('score-yellow'); label = l.mid; }
+    else { badge.classList.add('score-green'); label = l.good; }
+    document.getElementById('scoreLabel').textContent = label;
+
+    document.getElementById('verdictText').textContent = result.verdict;
+
+    const pointsList = document.getElementById('resultPoints');
+    pointsList.innerHTML = '';
+    result.points.forEach(p => {
+      const li = document.createElement('li');
+      li.textContent = p;
+      pointsList.appendChild(li);
+    });
+
+    document.getElementById('resultBox').classList.add('show');
+  }
+
+  /* ── POLL ── */
+  const questions = [
+    {
+      text: "Should Estonia increase its defense spending to 5% of GDP, even if it means cutting social benefits?",
+      agree: ["Reformierakond", "Isamaa"],
+      disagree: ["Keskerakond"]
+    },
+    {
+      text: "The car tax should be completely abolished, regardless of its impact on the state budget.",
+      agree: ["EKRE", "Isamaa"],
+      disagree: ["Reformierakond", "SDE", "Eesti 200"]
+    },
+    {
+      text: "A uniform tax-free threshold of 700€ for everyone is better than a system where the tax-free amount depends on your income.",
+      agree: ["Reformierakond", "Parempoolsed"],
+      disagree: ["SDE", "Keskerakond"]
+    },
+    {
+      text: "The transition to Estonian-language education in all schools should happen as fast as possible, without exceptions.",
+      agree: ["Reformierakond", "Isamaa", "Eesti 200"],
+      disagree: ["Keskerakond"]
+    },
+    {
+      text: "Estonia should prioritize achieving climate neutrality goals over the profitability of the oil shale (põlevkivi) industry.",
+      agree: ["SDE", "Eestimaa Rohelised"],
+      disagree: ["EKRE", "Isamaa"]
+    },
+    {
+      text: "The 2024 legalization of same-sex marriage was a positive step for Estonian society.",
+      agree: ["Reformierakond", "SDE", "Eesti 200"],
+      disagree: ["EKRE", "Isamaa"]
+    },
+    {
+      text: "Estonia should make it easier for foreign workers to enter the country to solve the labor shortage.",
+      agree: ["Eesti 200", "Parempoolsed"],
+      disagree: ["EKRE"]
+    },
+    {
+      text: "Increasing the VAT (Käibemaks) to 24% is a necessary sacrifice to protect Estonia's independence.",
+      agree: ["Reformierakond", "SDE", "Eesti 200"],
+      disagree: ["Isamaa", "EKRE", "Keskerakond"]
+    }
+  ];
+
+  const partyDescriptions = {
+    "Reformierakond": "Reformierakond (Reform Party) is a liberal-conservative party focused on free-market economics, strong national defense, and pro-EU integration. They support the VAT increase, defense spending, and Estonian-language education.",
+    "Isamaa": "Isamaa is a national-conservative party emphasizing Estonian cultural identity, strong defense, and traditional values. They oppose same-sex marriage and the VAT increase, but strongly support defense spending.",
+    "EKRE": "EKRE (Conservative People's Party) is a right-wing populist party focused on strict immigration control, traditional values, and skepticism of EU policies. They want to abolish the car tax and oppose same-sex marriage.",
+    "Keskerakond": "Keskerakond (Centre Party) traditionally focuses on social welfare, Russian-speaking minority rights, and a slower approach to Estonian-language education transition. They prioritize social benefits over defense cuts.",
+    "SDE": "SDE (Social Democrats) balance progressive social policies with a pro-EU stance. They support same-sex marriage, climate goals, and the VAT increase for defense, while preferring progressive taxation.",
+    "Eesti 200": "Eesti 200 is a centrist liberal party focused on education reform, digital innovation, and openness to immigration. They support the coalition's tax policies and Estonian-language education.",
+    "Parempoolsed": "Parempoolsed (The Right) is a business-oriented conservative party supporting flat taxation, open labor markets, and economic liberalism.",
+    "Eestimaa Rohelised": "Eestimaa Rohelised (Estonian Greens) prioritize environmental policy, climate neutrality, and sustainable development over fossil fuel industries like oil shale."
+  };
+
+  let currentQ = 0;
+  let scores = {};
+
+  const allParties = ["Reformierakond","Isamaa","EKRE","Keskerakond","SDE","Eesti 200","Parempoolsed","Eestimaa Rohelised"];
+  allParties.forEach(p => scores[p] = 0);
+
+  function initPoll() {
+    currentQ = 0;
+    allParties.forEach(p => scores[p] = 0);
+    document.getElementById('pollQuestionWrap').style.display = 'block';
+    document.getElementById('pollResult').classList.remove('show');
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const t = translations[currentLang];
+    const qList = currentLang === 'ru' ? questionsRu : currentLang === 'et' ? questionsEt : questions;
+    const q = qList[currentQ];
+    const pct = Math.round((currentQ / questions.length) * 100);
+
+    document.getElementById('pollProgressText').textContent = t.questionOf(currentQ + 1, questions.length);
+    document.getElementById('pollProgressPct').textContent = pct + '%';
+    document.getElementById('pollProgressFill').style.width = pct + '%';
+    document.getElementById('pollQNumber').textContent = t.questionN(currentQ + 1);
+    document.getElementById('pollQText').textContent = q.text;
+
+    document.getElementById('pollOptions').innerHTML = `
+      <button class="poll-option" onclick="answerPoll('agree')">
+        <span class="opt-letter">A</span> ${t.pollAgree}
+      </button>
+      <button class="poll-option" onclick="answerPoll('neutral')">
+        <span class="opt-letter">B</span> ${t.pollNeutral}
+      </button>
+      <button class="poll-option" onclick="answerPoll('disagree')">
+        <span class="opt-letter">C</span> ${t.pollDisagree}
+      </button>
+    `;
+
+    const wrap = document.getElementById('pollQuestionWrap');
+    wrap.style.animation = 'none';
+    void wrap.offsetWidth;
+    wrap.style.animation = 'fadeUp 0.4s ease';
+  }
+
+  function answerPoll(choice) {
+    const q = questions[currentQ]; // always use EN for party alignment logic
+    if (choice === 'agree') {
+      q.agree.forEach(p => { if (scores[p] !== undefined) scores[p] += 2; });
+      if (q.disagree) q.disagree.forEach(p => { if (scores[p] !== undefined) scores[p] -= 1; });
+    } else if (choice === 'disagree') {
+      q.disagree.forEach(p => { if (scores[p] !== undefined) scores[p] += 2; });
+      if (q.agree) q.agree.forEach(p => { if (scores[p] !== undefined) scores[p] -= 1; });
+    }
+
+    currentQ++;
+    if (currentQ >= questions.length) {
+      showResult();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function showResult() {
+    const t = translations[currentLang];
+    document.getElementById('pollProgressText').textContent = t.complete;
+    document.getElementById('pollProgressPct').textContent = '100%';
+    document.getElementById('pollProgressFill').style.width = '100%';
+    document.getElementById('pollQuestionWrap').style.display = 'none';
+
+    const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
+    const winner = sorted[0][0];
+
+    document.getElementById('resultPartyName').textContent = winner;
+    const descs = currentLang === 'ru' ? partyDescriptionsRu : currentLang === 'et' ? partyDescriptionsEt : partyDescriptions;
+    document.getElementById('resultReasoning').textContent = descs[winner] || '';
+    document.querySelector('.result-party-top p').textContent = t.pollResultLabel;
+    document.querySelector('.result-breakdown h3').textContent = t.pollBreakdownTitle;
+    document.querySelector('.retake-btn').textContent = t.retakeBtn;
+
+    const maxPossible = questions.length * 2;
+    const barsHtml = sorted
+      .filter(([p, s]) => s > 0)
+      .map(([p, s], i) => {
+        const pct = Math.max(0, Math.round((s / maxPossible) * 100));
+        return `
+          <div class="party-bar-row">
+            <span class="party-bar-name">${p}</span>
+            <div class="party-bar-track">
+              <div class="party-bar-fill ${i === 0 ? 'top' : ''}" style="width:${pct}%"></div>
+            </div>
+            <span class="party-bar-count">${s}pt</span>
+          </div>`;
+      }).join('');
+
+    document.getElementById('partyBars').innerHTML = barsHtml || `<p style="font-size:0.85rem;color:var(--muted)">${t.pollNeutralMsg}</p>`;
+    document.getElementById('pollResult').classList.add('show');
+  }
+
+  function restartPoll() {
+    initPoll();
+    document.getElementById('pollResult').classList.remove('show');
+    document.getElementById('pollQuestionWrap').style.display = 'block';
+  }
+
+  /* ── VIDEO MANAGER ── */
+  let videos = [];
+
+  function toggleAddPanel() {
+    const header = document.getElementById('addVideoHeader');
+    const body = document.getElementById('addVideoBody');
+    header.classList.toggle('open');
+    body.classList.toggle('open');
+  }
+
+  function switchTab(id, btn) {
+    document.querySelectorAll('#addVideoBody .tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('#addVideoBody .tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function getYouTubeId(url) {
+    const patterns = [
+      /youtube\.com\/watch\?v=([^&\n?#]+)/,
+      /youtube\.com\/embed\/([^&\n?#]+)/,
+      /youtu\.be\/([^&\n?#]+)/,
+      /youtube\.com\/shorts\/([^&\n?#]+)/
+    ];
+    for (const p of patterns) {
+      const m = url.match(p);
+      if (m) return m[1];
+    }
+    return null;
+  }
+
+  function addYouTube() {
+    const url = document.getElementById('ytUrl').value.trim();
+    const title = document.getElementById('ytTitle').value.trim();
+    if (!url) { alert('Please paste a YouTube URL.'); return; }
+    const id = getYouTubeId(url);
+    if (!id) { alert('Could not find a YouTube video ID. Make sure it\'s a valid YouTube link.'); return; }
+    const embedSrc = 'https://www.youtube.com/embed/' + id + '?rel=0';
+    addVideoToGrid({ type: 'iframe', src: embedSrc, title: title || 'YouTube Video' });
+    document.getElementById('ytUrl').value = '';
+    document.getElementById('ytTitle').value = '';
+  }
+
+  function addDirectUrl() {
+    const url = document.getElementById('directUrl').value.trim();
+    const title = document.getElementById('directTitle').value.trim();
+    if (!url) { alert('Please paste a video URL.'); return; }
+    addVideoToGrid({ type: 'video', src: url, title: title || 'Video' });
+    document.getElementById('directUrl').value = '';
+    document.getElementById('directTitle').value = '';
+  }
+
+  function handleFileUpload(files) {
+    if (!files || !files[0]) return;
+    const file = files[0];
+    const title = document.getElementById('uploadTitle').value.trim() || file.name;
+    // Store as data URL so it survives re-renders
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      addVideoToGrid({ type: 'video', src: e.target.result, title });
+    };
+    reader.readAsDataURL(file);
+    document.getElementById('uploadTitle').value = '';
+    document.getElementById('fileInput').value = '';
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    const files = e.dataTransfer.files;
+    if (files && files[0] && files[0].type.startsWith('video/')) handleFileUpload(files);
+  }
+
+  function addVideoToGrid(video) {
+    videos.push({ id: Date.now(), ...video });
+    renderGrid();
+    document.getElementById('addVideoHeader').classList.remove('open');
+    document.getElementById('addVideoBody').classList.remove('open');
+  }
+
+  function removeVideo(id) {
+    videos = videos.filter(v => v.id !== id);
+    renderGrid();
+  }
+
+  function renderGrid() {
+    const grid = document.getElementById('videosGrid');
+    if (!grid) return;
+    if (videos.length === 0) {
+      grid.innerHTML = '<div class="empty-state"><strong>No videos yet</strong>Use the panel above to add YouTube videos or upload your own files.</div>';
+      return;
+    }
+    grid.innerHTML = videos.map(v => {
+      const media = v.type === 'iframe'
+        ? `<iframe src="${v.src}" allowfullscreen frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`
+        : `<video controls><source src="${v.src}"></video>`;
+      return `<div class="video-item">
+        <div class="video-wrapper">${media}</div>
+        <div class="video-item-footer">
+          <span class="video-title">${v.title}</span>
+          <button class="remove-btn" onclick="removeVideo(${v.id})">Remove</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  /* ── VOICE SUBMISSIONS ── */
+  let voiceType = 'complaint';
+  let submissions = [];
+
+  function setVoiceType(type, btn) {
+    voiceType = type;
+    document.querySelectorAll('.voice-type-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function submitVoice() {
+    const topic = document.getElementById('voiceTopic').value;
+    const name = document.getElementById('voiceName').value.trim() || 'Anonymous';
+    const message = document.getElementById('voiceMessage').value.trim();
+    const required = { en: 'Please write a message before submitting.', ru: 'Пожалуйста, напишите сообщение.', et: 'Palun kirjuta sõnum enne saatmist.' };
+    if (!message) { alert(required[currentLang]); return; }
+    submissions.unshift({ type: voiceType, topic: topic || 'General', name, message, time: new Date() });
+    renderFeed();
+    document.getElementById('voiceMessage').value = '';
+    document.getElementById('voiceName').value = '';
+    document.getElementById('voiceTopic').value = '';
+    const success = document.getElementById('voiceSuccess');
+    success.classList.add('show');
+    setTimeout(() => success.classList.remove('show'), 3500);
+  }
+
+  function renderFeed() {
+    const feed = document.getElementById('voiceFeed');
+    if (!feed) return;
+    if (submissions.length === 0) {
+      const empty = { en: 'No submissions yet. Be the first to share your voice.', ru: 'Пока нет сообщений. Будьте первым!', et: 'Esitusi pole veel. Ole esimene!' };
+      feed.innerHTML = `<p class="feed-empty">${empty[currentLang]}</p>`;
+      return;
+    }
+    const typeLabels = {
+      en: { complaint: '⚡ Complaint', idea: '💡 Idea' },
+      ru: { complaint: '⚡ Жалоба', idea: '💡 Идея' },
+      et: { complaint: '⚡ Kaebus', idea: '💡 Idee' }
+    };
+    feed.innerHTML = `<div class="feed-list">${submissions.map(s => {
+      const tl = typeLabels[currentLang] || typeLabels.en;
+      const timeStr = s.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      return `<div class="feed-item">
+        <div class="feed-item-type ${s.type}">${tl[s.type]}</div>
+        <div class="feed-item-topic">${s.topic}</div>
+        <div class="feed-item-text">${s.message}</div>
+        <div class="feed-item-meta">${s.name} · ${timeStr}</div>
+      </div>`;
+    }).join('')}</div>`;
+  }
+
+  function updateVoiceLabels(lang) {
+    const voiceLabels = {
+      en: { complaint: '⚡ Complaint', idea: '💡 Idea', topic: 'Topic / Area', name: 'Your name (optional)', message: 'Your message', submit: 'Submit →', msgPlaceholder: 'Write your complaint or idea here...' },
+      ru: { complaint: '⚡ Жалоба', idea: '💡 Идея', topic: 'Тема / Сфера', name: 'Ваше имя (необязательно)', message: 'Ваше сообщение', submit: 'Отправить →', msgPlaceholder: 'Напишите жалобу или идею здесь...' },
+      et: { complaint: '⚡ Kaebus', idea: '💡 Idee', topic: 'Teema / valdkond', name: 'Sinu nimi (valikuline)', message: 'Sinu sõnum', submit: 'Saada →', msgPlaceholder: 'Kirjuta oma kaebus või idee siia...' }
+    };
+    const vl = voiceLabels[lang] || voiceLabels.en;
+    const el = (id) => document.getElementById(id);
+    if (el('btn-complaint')) el('btn-complaint').textContent = vl.complaint;
+    if (el('btn-idea')) el('btn-idea').textContent = vl.idea;
+    if (el('label-topic')) el('label-topic').textContent = vl.topic;
+    if (el('label-name')) el('label-name').textContent = vl.name;
+    if (el('label-message')) el('label-message').textContent = vl.message;
+    if (el('voiceMessage')) el('voiceMessage').placeholder = vl.msgPlaceholder;
+    const sub = document.querySelector('.voice-submit');
+    if (sub) sub.textContent = vl.submit;
+    renderFeed();
+  }
+
+  // init on load
+  document.addEventListener('DOMContentLoaded', () => {
+    initPoll();
+    renderGrid();
+    renderFeed();
+    document.getElementById('urlInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkSource();
+    });
+  });
+</script>
+</body>
+</html>
